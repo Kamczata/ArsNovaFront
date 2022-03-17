@@ -5,6 +5,7 @@ import cmentarz from "./cmentarz.jpg";
 import noce from "./noce.jpg";
 import logo from "./logo.jpg";
 import background from "./background.png";
+import Categories from "./components/Categories";
 
 function App() {
   const artworkList = [
@@ -51,14 +52,22 @@ function App() {
     },
   ];
 
+  const categoriesList = [
+    { name: "Malarstwo" },
+    { name: "Grafika" },
+    { name: "Rzeźba" },
+    { name: "Rysunek" },
+  ];
+
   return (
-    <div className="App" >
+    <div className="App">
       <header className="App-header">
         {/* <h1 className="title">Ars Nova</h1> */}
         <img className="App-logo" src={logo} alt="logo"></img>
       </header>
-      <div className="body" style={{ backgroundImage: `url(${background})`}}>
-      <ArtworkList artworks={artworkList} />
+      <Categories categories={categoriesList} />
+      <div className="body" style={{ backgroundImage: `url(${background})` }}>
+        <ArtworkList artworks={artworkList} />
       </div>
     </div>
   );

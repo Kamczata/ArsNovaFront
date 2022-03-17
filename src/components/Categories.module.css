@@ -1,0 +1,12 @@
+#parent {
+  white-space: nowrap;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 25%;
+  margin-left: 25%;
+}
+
+.child {
+  display: inline-block;
+  width: 25%;
+}

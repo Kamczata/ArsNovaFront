@@ -1,0 +1,22 @@
+.artwork{
+}
+
+.author {
+}
+
+.name {
+}
+
+.imageboard {
+  padding: 5%;
+  padding-bottom: 0%;
+  padding-top: 0%;
+}
+
+.image {
+  width: 60%;
+  border-style: solid;
+  padding: 7%;
+  border-width: 1px;
+  border-spacing: 10px;
+}

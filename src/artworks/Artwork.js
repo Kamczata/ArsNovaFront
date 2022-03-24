@@ -1,13 +1,18 @@
-import "./Artwork.css"
+import "./Artwork.css";
 
 const Artwork = (props) => {
-
   return (
     <div className="artwork">
-      <div className="imageboard">
-      <img className="image" src={props.source} alt="artwork"/>
-      <p className="title">{props.name}</p>
-      <p>{props.author}</p>
+      <div className="imageboard" id="container">
+        <div>
+          <img className="image" src={props.source} alt="artwork" />
+          <span className="name">
+            <small>{props.name.toUpperCase()}</small>
+          </span>
+        </div>
+        <span className="author">
+            <small>{props.author.toUpperCase()}</small>
+          </span>
       </div>
     </div>
   );

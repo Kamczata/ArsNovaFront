@@ -2,7 +2,7 @@ import "./Artwork.css";
 
 const Artwork = (props) => {
   return (
-    <div className="artwork">
+    <div key={props.id} className="artwork">
       <div className="imageboard" id="container">
         <div>
           <img className="image" src={props.source} alt="artwork" />

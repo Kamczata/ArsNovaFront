@@ -6,7 +6,7 @@ const ArtworkList = (props) => {
     <div className="grid-container">
       {props.artworks.map((artwork) => (
         <Artwork
-          id={artwork.id}
+          key={artwork.id}
           name={artwork.name}
           source={artwork.source}
           author={artwork.author}

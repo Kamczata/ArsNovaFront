@@ -9,45 +9,62 @@ import Categories from "./components/Categories";
 import React, { useState } from "react";
 
 function App() {
+  const startLink =
+    "http://localhost:5000/api/Artwork/All?PageNumber=1&PageSize=15";
   const [artworks, setArtworks] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [artorksAPI, setArtworksAPI] = useState(startLink);
 
-  const categoriesList = [
-    { name: "Malarstwo" },
-    { name: "Grafika" },
-    { name: "Rzeźba" },
-    { name: "Rysunek" },
-  ];
+  function loadCategories() {
+    fetch("http://localhost:5000/api/Category")
+      .then((response) => response.json())
+      .then((data) => setCategories(data));
+  }
 
   function loadArtworks() {
-    fetch("http://localhost:5000/api/Artwork/All?PageNumber=1&PageSize=2")
+    fetch(artorksAPI)
       .then((response) => response.json())
-      .then((data) => console.log(data));
-
-    //   const artworkObjects = data.results.map((artwork) => {
-    //     return {
-    //       id: artwork.id,
-    //       author: "ktokolwiek",
-    //       source: artwork.imgSource,
-    //       name: artwork.name,
-    //     };
-    //   });
-    //   setArtworks(artworkObjects);
+      .then((data) => {
+        const artworkObjects = data.map((artwork) => {
+          return {
+            id: artwork.id,
+            author: artwork.artist.name,
+            source: artwork.imgSource,
+            name: artwork.name,
+          };
+        });
+        setArtworks(artworkObjects);
+      });
   }
+
+  function onCategoryClickHandler(categoryId) {
+    const link = `http://localhost:5000/api/Artwork/Artwork/Category/${categoryId}?PageNumber=1&PageSize=15`;
+    setArtworksAPI(link);
+  }
+
+  const onLogoClickHandler = () => {
+    setArtworksAPI(startLink);
+  };
 
   React.useEffect(() => {
     loadArtworks();
-  }, []);
+    loadCategories();
+  }, [artorksAPI]);
 
   return (
     <div className="App">
       <header className="App-header">
         {/* <h1 className="title">Ars Nova</h1> */}
-        <img className="App-logo" src={logo} alt="logo"></img>
+        <div onClick={onLogoClickHandler}>
+          <img className="App-logo" src={logo} alt="logo" />
+        </div>
       </header>
-      {/* <button onClick={fetchArtworksHandler}>Fetch data</button> */}
-      <Categories categories={categoriesList} />
+      <Categories
+        categories={categories}
+        onCategoryClick={onCategoryClickHandler}
+      />
       <div className="body" style={{ backgroundImage: `url(${background})` }}>
-        {/* <ArtworkList artworks={artworks} /> */}
+        <ArtworkList artworks={artworks} />
       </div>
     </div>
   );

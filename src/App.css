@@ -3,7 +3,7 @@
 }
 
 .stripe {
-  background-color: #DFF6FF;
+  background-color: #dff6ff;
   background-position: 20%;
   height: 300px;
 }
@@ -52,9 +52,7 @@
   }
 }
 
-.title {
+h1 {
   color: black;
-  font-family: 'Abril Fatface', cursive;
+  font-family: "Abril Fatface", cursive;
 }
-
-

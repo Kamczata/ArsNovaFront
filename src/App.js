@@ -5,16 +5,17 @@ import logo from "./logo.jpg";
 import background from "./background.png";
 import Categories from "./components/Categories";
 import React, { useState } from "react";
+import ArtistView from "./artworks/ArtistView/ArtistView";
 
 function App() {
   const startLink =
     "http://localhost:5000/api/Artwork/All?PageNumber=1&PageSize=15";
   const [artworks, setArtworks] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [artworksAPI, setArtworksAPI] = useState(startLink);
-  const [artistAPI, setArtistAPI] = useState("");
-  const [artworkAPI, setArtworkAPI] = useState("");
+  const [API, setAPI] = useState(startLink);
   const [view, setView] = useState("artworks");
+  const [content, setContent] = useState([]);
+  const [artist, setArtist] = useState([]);
 
   function loadCategories() {
     fetch("http://localhost:5000/api/Category")
@@ -23,7 +24,7 @@ function App() {
   }
 
   function loadArtworks() {
-    fetch(artworksAPI)
+    fetch(API)
       .then((response) => response.json())
       .then((data) => {
         const artworkObjects = data.map((artwork) => {
@@ -39,55 +40,55 @@ function App() {
       });
   }
 
-  function loadArtist() {
-    fetch(artistAPI)
+  function loadContent() {
+    fetch(API)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setContent(data);
+        setArtist({
+          id: data.artist.id,
+          name: data.artist.name,
+        });
       });
-  }
-
-  function loadSingleArtwork() {
-    fetch(artworkAPI)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
   }
 
   function onCategoryClickHandler(categoryId) {
     const link = `http://localhost:5000/api/Artwork/Artwork/Category/${categoryId}?PageNumber=1&PageSize=15`;
-    setArtworksAPI(link);
+    // setArtworksAPI(link);
+    setAPI(link);
     setView("artworks");
   }
 
   const onArtworkClickHandler = (artworkId) => {
     const link = `http://localhost:5000/api/Artwork/Artwork/${artworkId}`;
-    setArtworkAPI(link);
+    //setArtworkAPI(link);
+    setAPI(link);
     setView("artworkDetailed");
   };
 
   const onArtistClickHandler = (artistId) => {
     const link = `http://localhost:5000/api/Artist/${artistId}`;
-    setArtistAPI(link);
-    loadArtist();
+    //setArtistAPI(link);
+    setAPI(link);
     setView("author");
   };
 
   const onLogoClickHandler = () => {
-    setArtworksAPI(startLink);
+    //setArtworksAPI(startLink);
+    setAPI(startLink);
     setView("artworks");
   };
 
   React.useEffect(() => {
     if (view === "artworks") {
       loadArtworks();
-    } else if (view === "author") {
-      loadArtist();
-    } else if (view === "artworkDetailed") {
-      loadSingleArtwork();
+    } else {
+      loadContent();
     }
 
+    console.log(content);
     loadCategories();
-  }, [artworkAPI, artistAPI, artworksAPI]);
+  }, [API, view, content.id]);
 
   return (
     <div className="App">
@@ -109,7 +110,10 @@ function App() {
             onArtistClick={onArtistClickHandler}
           />
         )}
-        {view === "artworkDetailed" && <ArtworkView />}
+        {view === "artworkDetailed" && (
+          <ArtworkView artwork={content} artist={artist} />
+        )}
+        {view === "author" && <ArtistView artist={content} />}
       </div>
     </div>
   );

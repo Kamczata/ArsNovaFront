@@ -1,0 +1,33 @@
+
+.image {
+  width: 60%;
+  border-style: solid;
+  padding: 7%;
+  border-width: 1px;
+  border-spacing: 10px;
+}
+
+#container {
+  position: relative;
+  display: inline-block;
+}
+
+.author-name {
+  color: black;
+  font-family: "Abril Fatface", cursive;
+  font-family: "Libre Bodoni", serif;
+  font-size: 140px;
+  font-weight: 200;
+}
+
+.description {
+  color: black;
+  font-family: "Abril Fatface", cursive;
+  font-family: "Libre Bodoni", serif;
+  font-size: 20px;
+  font-weight: 100;
+  margin: auto;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  max-width: 50%;
+}

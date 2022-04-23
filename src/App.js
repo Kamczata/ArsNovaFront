@@ -40,15 +40,28 @@ function App() {
       });
   }
 
-  function loadContent() {
+  function loadArtwork() {
     fetch(API)
       .then((response) => response.json())
       .then((data) => {
-        setContent(data);
+        const artworkObject = {
+          id: data.id,
+          name: data.name.toUpperCase(),
+          imgSource: data.imgSource,
+        };
+        setContent(artworkObject);
         setArtist({
           id: data.artist.id,
           name: data.artist.name,
         });
+      });
+  }
+
+  function loadArtist() {
+    fetch(API)
+      .then((response) => response.json())
+      .then((data) => {
+        setArtist(data);
       });
   }
 
@@ -82,11 +95,11 @@ function App() {
   React.useEffect(() => {
     if (view === "artworks") {
       loadArtworks();
-    } else {
-      loadContent();
+    } else if (view === "author") {
+      loadArtist();
+    } else if (view === "artworkDetailed") {
+      loadArtwork();
     }
-
-    console.log(content);
     loadCategories();
   }, [API, view, content.id]);
 
@@ -113,7 +126,7 @@ function App() {
         {view === "artworkDetailed" && (
           <ArtworkView artwork={content} artist={artist} />
         )}
-        {view === "author" && <ArtistView artist={content} />}
+        {view === "author" && <ArtistView artist={artist} />}
       </div>
     </div>
   );
